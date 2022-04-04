@@ -13,6 +13,22 @@ const importObject = {
       importObject.output += "\n";
       return arg;
     },
+
+    abs: (arg : any) => {
+      return Math.abs(arg);
+    },
+
+    min: (arg1: any, arg2: any) => {
+      return Math.min(arg1, arg2);
+    },
+
+    max: (arg1: any, arg2: any) => {
+      return Math.max(arg1, arg2);
+    },
+
+    pow: (arg1: any, arg2: any) => {
+      return Math.pow(arg1, arg2);
+    }
   },
 
   output: ""
@@ -42,6 +58,7 @@ describe('run(source, config) function', () => {
   // resulting from running the program
   it('prints something right', async() => {
     var result = await run("print(1337)", config);
+    expect(result).to.equal(1337);
     expect(config.importObject.output).to.equal("1337\n");
   });
 
@@ -61,6 +78,41 @@ describe('run(source, config) function', () => {
   it('adds two numbers', async() => {
     const result = await run("2 + 3", config);
     expect(result).to.equal(5);
+  });
+
+  it('pow two numbers overflow truncates', async() => {
+    const result = await run("pow(2, 32)", config);
+    expect(result).to.equal(0);
+  });
+
+  it('substracts two numbers', async() => {
+    const result = await run("2 - 3", config);
+    expect(result).to.equal(-1);
+  });
+
+  it('abs of a number', async() => {
+    const result = await run("abs(1 - 2)", config);
+    expect(result).to.equal(1);
+  });
+
+  it('max of two numbers', async() => {
+    const result = await run("max(100, 120)", config);
+    expect(result).to.equal(120);
+  });
+
+  it('min of two numbers', async() => {
+    const result = await run("min(100, 120)", config);
+    expect(result).to.equal(100);
+  });
+
+  it('pow of two numbers', async() => {
+    const result = await run("pow(2, 10)", config);
+    expect(result).to.equal(1024);
+  });
+
+  it('sequence of expressions and assignments 1', async() => {
+    const result = await run("x = abs(-1)\ny = max(1025, pow(2, 10))\nprint(x + y)", config) 
+    expect(result).to.equal(1026);
   });
 
   // TODO: add additional tests here to ensure the compiler runs as expected
