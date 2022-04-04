@@ -35,18 +35,6 @@ describe('traverseExpr(c, s) function', () => {
     expect(() => traverseExpr(cursor, source)).to.throw();
   })
 
-  it('fails to parse out of i32 range positive number', () => {
-    const source = "2147483648";
-    const cursor = parser.parse(source).cursor();
-
-    // go to statement
-    cursor.firstChild();
-    // go to expression
-    cursor.firstChild();
-
-    expect(() => traverseExpr(cursor, source)).to.throw();
-  })
-
   it('parses a negative number in the beginning', () => {
     const source = "-987";
     const cursor = parser.parse(source).cursor();
@@ -64,18 +52,6 @@ describe('traverseExpr(c, s) function', () => {
 
   it('fails to parse negative floating point number', () => {
     const source = "-3.14";
-    const cursor = parser.parse(source).cursor();
-
-    // go to statement
-    cursor.firstChild();
-    // go to expression
-    cursor.firstChild();
-
-    expect(() => traverseExpr(cursor, source)).to.throw();
-  })
-
-  it('fails to parse out of i32 range negative number', () => {
-    const source = "-2147483649";
     const cursor = parser.parse(source).cursor();
 
     // go to statement

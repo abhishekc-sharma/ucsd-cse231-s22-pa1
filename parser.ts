@@ -11,10 +11,6 @@ function parseInt32(c : TreeCursor, s : string) : number {
     throw new Error("ParseError: Could not parse i32 at " + c.from + " " + c.to + ": " + numberStr);
   }
 
-  if(integerValue < -(2**31) || integerValue > (2**31) - 1) {
-    throw new Error("ParseError: Could not parse i32 at " + c.from + " " + c.to + ": " + numberStr);
-  }
-
   return integerValue;
 }
 
