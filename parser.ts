@@ -78,6 +78,7 @@ export function traverseExpr(c : TreeCursor, s : string) : Expr {
 
         c.nextSibling();
         if(s.substring(c.from, c.to) !== ")") {
+          c.parent();
           throw new Error("ParseError: Invalid arguments to builtin1 " + c.from + " " + c.to + ": " + s.substring(c.from, c.to));
         }
 
@@ -99,6 +100,7 @@ export function traverseExpr(c : TreeCursor, s : string) : Expr {
 
         c.nextSibling();
         if(s.substring(c.from, c.to) !== ")") {
+          c.parent();
           throw new Error("ParseError: Invalid arguments to builtin2 " + c.from + " " + c.to + ": " + s.substring(c.from, c.to));
         }
 
@@ -183,6 +185,9 @@ export function traverse(c : TreeCursor, s : string) : Array<Stmt> {
   }
 }
 export function parse(source : string) : Array<Stmt> {
+  if(source.trim() === "") {
+    return [];
+  }
   const t = parser.parse(source);
   return traverse(t.cursor(), source);
 }
