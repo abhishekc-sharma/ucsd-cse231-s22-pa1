@@ -8,7 +8,11 @@ function parseInt32(c : TreeCursor, s : string) : number {
   let integerValue = parseInt(numberStr, 10);
 
   if(numberValue !== integerValue) {
-    throw new Error("ParseError: Could not parse i32 at " + c.from + " " + c.to + ": " + numberStr);
+    throw new Error("ParseError: Could not parse float as i32 at " + c.from + " " + c.to + ": " + numberStr);
+  }
+
+  if(numberValue > 4294967295 || numberValue < -2147483648) {
+    throw new Error("ParseError: Could not parse out of range i32 at " + c.from + " " + c.to + ": " + numberStr);
   }
 
   return integerValue;

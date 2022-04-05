@@ -12,7 +12,22 @@ function webStart() {
           elt.innerText = arg;
           return arg;
         },
-      },
+        abs: (arg : any) => {
+          return Math.abs(arg);
+        },
+
+        min: (arg1: any, arg2: any) => {
+          return Math.min(arg1, arg2);
+        },
+
+        max: (arg1: any, arg2: any) => {
+          return Math.max(arg1, arg2);
+        },
+
+        pow: (arg1: any, arg2: any) => {
+          return Math.pow(arg1, arg2);
+        }
+      }
     };
 
     function renderResult(result : any) : void {
